@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand p-3" href="{% url 'home' %}">Navbar</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      {% if request.user.is_staff %}
+        <a class="nav-item nav-link p-3" href="{% url 'products' %}">Products</a>
+        <a class="nav-item nav-link p-3" href="">Customers</a>
+        <a class="nav-item nav-link p-3" href="">Orders</a>
+      {% endif %}
+    </div>
+  </div>
+  <span class="text-light px-5">Hello, {{request.user}}</span>
+  <span><a class="px-5 btn btn-danger btn-sm" href="{% url 'logout' %}">Logout</a></span>
+</nav>
