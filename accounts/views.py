@@ -17,7 +17,7 @@ from django.contrib.auth.models import Group
 @unauthenticated_user
 def registerPage(request):
     form = CreateUserForm()
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
