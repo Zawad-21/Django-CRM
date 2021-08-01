@@ -66,6 +66,21 @@ def userPage(request):
     return render(request, 'accounts/user.html', context)
 
 
+@login_required
+@allowed_user(allowed_roles=['customer'])
+def accountSettings(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+
+    context = {'form': form}
+    return render(request, 'accounts/account_settings.html', context)
+
+
 @login_required(login_url='login')
 @admin_only
 def home(request):
@@ -149,7 +164,6 @@ def updateOrder(request, pk):
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['Admin'])
 def deleteOrder(request, pk):
-    prev_url = request.META.get('HTTP_REFERER')
     order = Order.objects.get(id=pk)
     context = {'item': order}
     if request.method == 'POST':
